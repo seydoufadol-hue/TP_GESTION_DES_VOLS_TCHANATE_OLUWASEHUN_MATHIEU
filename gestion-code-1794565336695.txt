@@ -1,0 +1,60 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Passager {
+  - idPassager : string
+  - nom : string
+  - prenom : string
+  - telephone : string
+  - email : string
+  + Passager(id: string, nom: string, prenom: string, tel: string, email: string)
+  + getId() : string
+  + getNom() : string
+  + afficherDetails() : void
+}
+
+class Vol {
+  - numeroVol : string
+  - origine : string
+  - destination : string
+  - dateHeure : string
+  - capacite : int
+  - placesReservees : int
+  + Vol(num: string, orig: string, dest: string, date: string, cap: int)
+  + getNumeroVol() : string
+  + getCapacite() : int
+  + getPlacesReservees() : int
+  + verifierDisponibilite() : bool
+  + incrementerPlaces() : void
+  + decrementerPlaces() : void
+  + afficherVol() : void
+}
+
+class Reservation {
+  - idReservation : string
+  - passager : Passager*
+  - vol : Vol*
+  - statut : string
+  + Reservation(id: string, p: Passager*, v: Vol*)
+  + getIdReservation() : string
+  + getStatut() : string
+  + setStatut(s: string) : void
+  + getPassager() : Passager*
+  + getVol() : Vol*
+  + afficherReservation() : void
+}
+
+class Paiement {
+  - idPaiement : string
+  - montant : double
+  - datePaiement : string
+  - reservation : Reservation*
+  + Paiement(id: string, montant: double, date: string, res: Reservation*)
+  + afficherPaiement() : void
+}
+
+Passager "1" -- "0..*" Reservation : effectue >
+Vol "1" -- "0..*" Reservation : concerne >
+Reservation "1" -- "0..1" Paiement : regle par >
+
+@enduml
